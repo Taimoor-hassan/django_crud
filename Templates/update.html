@@ -1,0 +1,47 @@
+{%extends 'base.html'%}
+
+{%block body%}
+
+<div class="row">
+    <div class="col-sm-4" style="padding: 2.5rem;">
+        <h1>Update Form</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{f.as_p}}
+            <input type="submit" value="Update">
+            <a href="{% url 'home' %}"> <input type="button" value="Add New"></a>
+        </form>
+    </div>
+
+    <div class="col-sm-8">
+        <table class="table">
+            <thead>
+                <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in r reversed%}
+                <tr>
+                    <!-- <th scope="row">{{d.id}}</th> -->
+                    <td>{{d.name}}</td>
+                    <td>{{d.email}}</td>
+                    <form action="{% url 'edit' d.id%}" method="post">
+                        {% csrf_token %}
+                        <td> <input type="submit" value="Edit"></td>
+                    </form>
+                    <form action="{% url 'delete' d.id%}" method="post">
+                        {% csrf_token %}
+                        <td> <input type="submit" value="Delete"></td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{%endblock%}
